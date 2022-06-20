@@ -3,6 +3,7 @@ use std::io::BufRead;
 use mime::Mime;
 
 use crate::model::{Category, Content, Entry, Feed, FeedType, Generator, Image, Link, MediaObject, Person, Text};
+use crate::parser::arxiv::handle_arxiv_element;
 use crate::parser::mediarss;
 use crate::parser::mediarss::handle_media_element;
 use crate::parser::util::{if_some_then, timestamp_rfc3339_lenient};
@@ -182,6 +183,8 @@ fn handle_entry<R: BufRead>(element: Element<R>) -> ParseFeedResult<Option<Entry
             // MediaRSS tags that are not grouped are parsed into the default object
             (NS::MediaRSS, _) => handle_media_element(child, &mut media_obj)?,
 
+            (NS::Arxiv, _) => handle_arxiv_element(child, &mut entry)?,
+
             // Nothing required for unknown elements
             _ => {}
         }
@@ -259,7 +262,7 @@ fn handle_person<R: BufRead>(element: Element<R>) -> ParseFeedResult<Option<Pers
             ("name", Some(name)) => person.name = name,
             ("uri", uri) => person.uri = uri,
             ("email", email) => person.email = email,
-
+            ("arxiv:affiliation", affiliation) => person.affiliation = affiliation,
             // Nothing required for unknown elements
             _ => {}
         }

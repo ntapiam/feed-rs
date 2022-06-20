@@ -1,8 +1,8 @@
 [package]
 name = "feed-rs"
-version = "1.1.0"
+version = "1.1.1"
 edition = '2021'
-authors = ["Hiroki Kumamoto <kumabook@live.jp>", "Mark Pritchard <mpritcha@gmail.com>"]
+authors = ["Hiroki Kumamoto <kumabook@live.jp>", "Mark Pritchard <mpritcha@gmail.com>", "Nikolas Tapia <tapia@wias-berlin.de>"]
 include = [
     "**/*.rs",
     "Cargo.toml",
@@ -11,8 +11,8 @@ include = [
     "fixture/*"
 ]
 license = "MIT"
-homepage = "https://github.com/feed-rs/feed-rs"
-repository = "https://github.com/feed-rs/feed-rs.git"
+homepage = "https://github.com/ntapiam/feed-rs"
+repository = "https://github.com/ntapiam/feed-rs.git"
 description = "A unified feed parser that handles Atom, RSS 2.0, RSS 1.0, RSS 0.x and JSON Feed"
 keywords = ["feed", "rss", "atom", "json", "jsonfeed"]
 categories = ["parser-implementations"]

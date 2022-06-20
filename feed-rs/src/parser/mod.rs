@@ -15,6 +15,7 @@ mod rss0;
 mod rss1;
 mod rss2;
 
+pub(crate) mod arxiv;
 pub(crate) mod itunes;
 pub(crate) mod mediarss;
 pub(crate) mod util;

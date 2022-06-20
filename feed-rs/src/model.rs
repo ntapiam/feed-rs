@@ -301,6 +301,11 @@ pub struct Entry {
     /// Atom (optional): Conveys information about rights, e.g. copyrights, held in and over the feed.
     pub rights: Option<Text>,
 
+    pub comment: Option<String>,
+    pub primary_category: Option<Category>,
+    pub journal_ref: Option<String>,
+    pub doi: Option<Link>,
+
     /// Extension for MediaRSS - https://www.rssboard.org/media-rss
     /// A MediaObject will be created in two cases:
     /// 1) each "media:group" element encountered in the feed
@@ -325,6 +330,10 @@ impl Default for Entry {
             source: None,
             rights: None,
             media: Vec::new(),
+            comment: None,
+            primary_category: None,
+            journal_ref: None,
+            doi: None,
         }
     }
 }
@@ -938,6 +947,8 @@ pub struct Person {
     pub uri: Option<String>,
     /// Atom: An email address for the person.
     pub email: Option<String>,
+
+    pub affiliation: Option<String>,
 }
 
 impl Person {
@@ -946,6 +957,7 @@ impl Person {
             name: name.trim().into(),
             uri: None,
             email: None,
+            affiliation: None,
         }
     }
 
