@@ -183,10 +183,7 @@ fn handle_entry<R: BufRead>(element: Element<R>) -> ParseFeedResult<Option<Entry
             // MediaRSS tags that are not grouped are parsed into the default object
             (NS::MediaRSS, _) => handle_media_element(child, &mut media_obj)?,
 
-            (NS::Arxiv, _) => {
-                println!("handling arxiv tag");
-                handle_arxiv_element(child, &mut entry)?
-            }
+            (NS::Arxiv, _) => handle_arxiv_element(child, &mut entry)?,
 
             // Nothing required for unknown elements
             _ => {}

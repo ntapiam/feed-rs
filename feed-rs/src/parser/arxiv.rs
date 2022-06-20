@@ -4,6 +4,7 @@ use crate::xml::{Element, NS};
 use std::io::BufRead;
 
 pub(crate) fn handle_arxiv_element<R: BufRead>(element: Element<R>, entry: &mut Entry) -> ParseFeedResult<()> {
+    println!("handling arxiv element: {:#?}", element);
     match element.ns_and_tag() {
         (NS::Arxiv, "arxiv:primary_category") => entry.primary_category = handle_primary_category(element),
         (NS::Arxiv, "arxiv:comment") => entry.comment = element.child_as_text(),
