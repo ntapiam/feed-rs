@@ -6,11 +6,11 @@ use std::io::BufRead;
 pub(crate) fn handle_arxiv_element<R: BufRead>(element: Element<R>, entry: &mut Entry) -> ParseFeedResult<()> {
     println!("handling arxiv element: {:#?}", element);
     match element.ns_and_tag() {
-        (NS::Arxiv, "arxiv:primary_category") => entry.primary_category = handle_primary_category(element),
-        (NS::Arxiv, "arxiv:comment") => entry.comment = element.child_as_text(),
-        (NS::Arxiv, "arxiv:affiliation") => todo!(),
-        (NS::Arxiv, "arxiv:journal_ref") => entry.journal_ref = element.child_as_text(),
-        (NS::Arxiv, "arxiv:doi") => entry.doi = handle_doi(element),
+        (NS::Arxiv, "primary_category") => entry.primary_category = handle_primary_category(element),
+        (NS::Arxiv, "comment") => entry.comment = element.child_as_text(),
+        (NS::Arxiv, "affiliation") => todo!(),
+        (NS::Arxiv, "journal_ref") => entry.journal_ref = element.child_as_text(),
+        (NS::Arxiv, "doi") => entry.doi = handle_doi(element),
         _ => {}
     }
 
