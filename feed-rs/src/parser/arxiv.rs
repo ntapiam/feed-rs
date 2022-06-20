@@ -4,7 +4,6 @@ use crate::xml::{Element, NS};
 use std::io::BufRead;
 
 pub(crate) fn handle_arxiv_element<R: BufRead>(element: Element<R>, entry: &mut Entry) -> ParseFeedResult<()> {
-    println!("handling arxiv element: {:#?}", element);
     match element.ns_and_tag() {
         (NS::Arxiv, "primary_category") => entry.primary_category = handle_primary_category(element),
         (NS::Arxiv, "comment") => entry.comment = element.child_as_text(),
@@ -18,7 +17,25 @@ pub(crate) fn handle_arxiv_element<R: BufRead>(element: Element<R>, entry: &mut 
 }
 
 fn handle_primary_category<R: BufRead>(element: Element<R>) -> Option<Category> {
-    element.attr_value("term").map(|text| Category::new(&text))
+    // Always need a term
+    if let Some(term) = element.attr_value("term") {
+        let mut category = Category::new(&term);
+
+        for attr in element.attributes {
+            match attr.name.as_str() {
+                "scheme" => category.scheme = Some(attr.value.clone()),
+                "label" => category.label = Some(attr.value.clone()),
+
+                // Nothing required for unknown attributes
+                _ => {}
+            }
+        }
+
+        Some(category)
+    } else {
+        // A missing category isn't fatal
+        None
+    }
 }
 
 fn handle_doi<R: BufRead>(element: Element<R>) -> Option<Link> {
